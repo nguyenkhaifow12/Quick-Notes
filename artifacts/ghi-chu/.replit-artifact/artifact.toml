@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Ghi chú"
+description = "Ứng dụng ghi chú cá nhân bằng tiếng Việt, cho phép tạo, chỉnh sửa, xóa và tìm kiếm ghi chú; dữ liệu được lưu trực tiếp trên thiết bị."
+version = "1.0.0"
+id = "artifacts/ghi-chu"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 18182
+
+[services.development]
+run = "pnpm --filter @workspace/ghi-chu run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/ghi-chu", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/ghi-chu/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "18182"
+BASE_PATH = "/"
